@@ -1,0 +1,38 @@
+.ReactStickyHeader__sticky {
+  --transition-duration: 120ms;
+
+  transition: box-shadow var(--transition-duration) ease-out;
+  position: sticky;
+  box-sizing: border-box;
+}
+
+/* Bottom border for stacked sticky elements. */
+.ReactStickyHeader__sticky::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  display: block;
+  content: '';
+  opacity: 0;
+}
+
+/* For all except the last sticky element, make the bottom border visible. */
+.ReactStickyHeader__sticky.ReactStickyHeader__stuck:not(.ReactStickyHeader__lastStuck)::after {
+  opacity: 1;
+  transition: opacity var(--transition-duration)
+    calc(var(--transition-duration) / 2);
+}
+
+/* Give the last stuck element a shadow.
+ * z-index makes sure the shadow doesn't render on top of earlier sticky elements. */
+.ReactStickyHeader__sticky.ReactStickyHeader__lastStuck {
+  z-index: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.27), 0 2px 5px rgba(0, 0, 0, 0.12);
+}
+
+.ReactStickyHeader__sticky.ReactStickyHeader__stuck {
+  z-index: 2;
+}
