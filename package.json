@@ -1,6 +1,6 @@
 {
   "name": "@xper/react-sticky-headers",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "Stackable sticky headers for React",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
