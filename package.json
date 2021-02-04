@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Stackable sticky headers for React",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/xperjs/react-sticky-headers",
   "author": "Brandon Duffany",
   "license": "MIT",
@@ -11,7 +12,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "rm -rf ./dist && tsc && cp ./src/recommended.css ./dist/recommended.css"
+    "build": "rm -rf ./dist && tsc && node build.js && cp ./src/style.css ./dist/style.css"
   },
   "husky": {
     "hooks": {
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
+    "esbuild": "^0.8.39",
     "husky": "^4.3.8",
     "prettier": "^2.2.1",
     "typescript": "^4.1.3"

@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "amd",
+    "isolatedModules": true,
     "jsx": "react",
     "declaration": true,
     "declarationMap": true,
+    "emitDeclarationOnly": true,
     "sourceMap": true,
-    "outFile": "./dist/index.js",
     "outDir": "./dist",
     "rootDir": "./src",
     "moduleResolution": "node",

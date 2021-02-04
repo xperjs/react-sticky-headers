@@ -78,10 +78,11 @@ export default class Sticky extends React.Component<
   }
 
   render() {
-    const { className, ...props } = this.props;
+    const { className, style, ...props } = this.props;
     return (
       <div
         className={`${Sticky.className('sticky')} ${className || ''}`}
+        style={{ position: 'sticky', ...style }}
         {...props}
       />
     );
@@ -92,8 +93,7 @@ export default class Sticky extends React.Component<
 export type StickyClassNames = typeof DEFAULT_CLASS_NAMES;
 
 /**
- * `<StickyHost>` is a group of sticky elements which should be stacked on top of one
- * another. It must be nested inside the scrolling element,
+ * `<StickyHost>` manages the stickiness of descendant `<Sticky>` components.
  */
 export class StickyHost extends React.Component<JSX.IntrinsicElements['div']> {
   private root = React.createRef<HTMLDivElement>();
@@ -109,11 +109,14 @@ export class StickyHost extends React.Component<JSX.IntrinsicElements['div']> {
 
   private setupScrollListener() {
     const host = findScrollingAncestor(this.root.current!);
+    console.log({ host });
+
     if (!host) return;
     const scrollListener = this.onHostScroll.bind(this);
-    host.addEventListener('scroll', scrollListener);
+    const target = host === document.scrollingElement ? window : host;
+    target.addEventListener('scroll', scrollListener);
     this.dispose = () => {
-      host?.removeEventListener('scroll', scrollListener);
+      target?.removeEventListener('scroll', scrollListener);
     };
   }
 
