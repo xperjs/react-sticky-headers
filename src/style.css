@@ -22,8 +22,10 @@
 /* For all except the last sticky element, make the bottom border visible. */
 .ReactStickyHeader__sticky.ReactStickyHeader__stuck:not(.ReactStickyHeader__lastStuck)::after {
   opacity: 1;
-  transition: opacity var(--transition-duration)
-    calc(var(--transition-duration) / 2);
+}
+
+.ReactStickyHeader__sticky.ReactStickyHeader__stuck {
+  z-index: 2;
 }
 
 /* Give the last stuck element a shadow.
@@ -31,8 +33,4 @@
 .ReactStickyHeader__sticky.ReactStickyHeader__lastStuck {
   z-index: 1;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.27), 0 2px 5px rgba(0, 0, 0, 0.12);
-}
-
-.ReactStickyHeader__sticky.ReactStickyHeader__stuck {
-  z-index: 2;
 }

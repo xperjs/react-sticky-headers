@@ -16,14 +16,18 @@ const DEFAULT_CLASS_NAMES = {
  * ## Example
  *
  * ```tsx
- * <App style={{overflow: 'scroll'}}>
- *   <header>Site header</header>
- *   <Sticky><NavigationBar /></Sticky>
- *   <main>
- *     <div>Some content</div>
- *     <Sticky><Alert>A sticky alert that sticks below the nav bar</Alert></Sticky>
- *   <main>
- * </App>
+ * function MyApp() {
+ *   return (
+ *     <StickyHost>
+ *       <Sticky><Alert>A global alert that sticks to the top of the page</Alert></Sticky>
+ *       <header>Site header</header>
+ *       <Sticky><NavigationBar /></Sticky>
+ *       <main>
+ *         <div>Some content</div>
+ *       <main>
+ *     </StickyHost>
+ *   );
+ * }
  * ```
  *
  * ## Styling
@@ -121,18 +125,28 @@ export class StickyHost extends React.Component<JSX.IntrinsicElements['div']> {
   }
 
   private onHostScroll(e: Event) {
-    const scrollingElement = e.target as HTMLElement;
+    const scrollingElement =
+      e.target === document
+        ? document.scrollingElement!
+        : (e.target as HTMLElement);
     const scrollTop = scrollingElement.scrollTop;
+
+    console.log({ scrollingElement, scrollTop });
 
     let stackHeight = 0;
     let lastStuckEl: HTMLElement | null = null;
 
-    // Recalculate sticky classes.
-    for (const stickyEl of Array.from(
+    const stickies = Array.from(
       scrollingElement.getElementsByClassName(Sticky.className('sticky'))
-    ) as HTMLElement[]) {
-      const stuck = scrollTop + stackHeight >= stickyEl.offsetTop;
+    ) as HTMLElement[];
+    // Assign z-index in decreasing order, since stickies higher up in the DOM should
+    // render on top of stickies farther down.
+    let z = stickies.length;
+    for (const stickyEl of stickies) {
+      const stuck =
+        scrollTop > 0 && scrollTop + stackHeight >= stickyEl.offsetTop;
       stickyEl.style.top = `${stackHeight}px`;
+      stickyEl.style.zIndex = String(z--);
       stickyEl.classList.toggle(Sticky.className('stuck'), stuck);
       stickyEl.classList.remove(Sticky.className('lastStuck'));
       stackHeight += stickyEl.clientHeight;
