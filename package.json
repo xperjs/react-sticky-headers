@@ -12,6 +12,7 @@
     "dist/**/*"
   ],
   "scripts": {
+    "prepublish": "yarn build",
     "build": "rm -rf ./dist && tsc && node build.js && cp ./src/style.css ./dist/style.css"
   },
   "husky": {
