@@ -2,6 +2,8 @@
 
 Pixel-perfect stackable sticky headers for React!
 
+![](https://media1.giphy.com/media/jjN4kxU04p9YBPoPB4/giphy.gif)
+
 ## Usage
 
 ```tsx
