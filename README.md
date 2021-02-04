@@ -28,4 +28,4 @@ export default function MyApp() {
 
 ## More documentation
 
-See the docs in [src/index.tsx].
+See the docs in [src/index.tsx](src/index.tsx).
